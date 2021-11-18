@@ -2,18 +2,19 @@ package Fonts;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.util.Map;
+import java.util.HashMap;
 
 public class CFont {
     private String filepath;
     private int fontSize;
 
     private int width, height, lineHeight;
-    private Map<Integer, CharInfo> characterMap;
+    private HashMap<Integer, CharInfo> characterMap;
 
     public CFont (String filepath, int fontSize) {
         this.filepath = filepath;
         this.fontSize = fontSize;
+        this.characterMap = new HashMap<>();
         generateBitMap();
     }
 
@@ -35,7 +36,10 @@ public class CFont {
 
         for (int i = 0; i < font.getNumGlyphs(); i++) {
             if(font.canDisplay(i)) {
-
+                //Get the sizes of each codepoint glph, and update the actual image width and height
+                CharInfo charInfo = new CharInfo(x, y, fontMetrics.charWidth(i), fontMetrics.getHeight());
+                characterMap.put(i, charInfo);
+                width = Math.max(x + fontMetrics.charWidth(i), width);
             }
         }
     }
