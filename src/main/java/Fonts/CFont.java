@@ -2,10 +2,14 @@ package Fonts;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.util.Map;
 
 public class CFont {
     private String filepath;
     private int fontSize;
+
+    private int width, height, lineHeight;
+    private Map<Integer, CharInfo> characterMap;
 
     public CFont (String filepath, int fontSize) {
         this.filepath = filepath;
@@ -20,6 +24,19 @@ public class CFont {
         BufferedImage img = new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB);
         Graphics2D g2d = img.createGraphics();
         g2d.setFont(font);
+        FontMetrics fontMetrics = g2d.getFontMetrics();
 
+        int estimatedWidth = (int)Math.sqrt(font.getNumGlyphs() * font.getSize()) + 1;
+        width = 0;
+        height = fontMetrics.getHeight();
+        lineHeight = fontMetrics.getHeight();
+        int x = 0;
+        int y = (int)(fontMetrics.getHeight() * 1.4f);
+
+        for (int i = 0; i < font.getNumGlyphs(); i++) {
+            if(font.canDisplay(i)) {
+
+            }
+        }
     }
 }
